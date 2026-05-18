@@ -1,9 +1,8 @@
 import type { FC } from 'react'
-import { memo } from 'react'
 import type { ChatItem } from '../../types'
+import { cn } from '@langgenius/dify-ui/cn'
+import { memo } from 'react'
 import { useChatContext } from '../context'
-import Button from '@/app/components/base/button'
-import useBreakpoints, { MediaType } from '@/hooks/use-breakpoints'
 
 type SuggestedQuestionsProps = {
   item: ChatItem
@@ -11,10 +10,7 @@ type SuggestedQuestionsProps = {
 const SuggestedQuestions: FC<SuggestedQuestionsProps> = ({
   item,
 }) => {
-  const { onSend } = useChatContext()
-  const media = useBreakpoints()
-  const isMobile = media === MediaType.mobile
-  const klassName = `mr-1 mt-1 ${isMobile ? 'block overflow-hidden text-ellipsis' : ''} max-w-full shrink-0 last:mr-0`
+  const { onSend, readonly } = useChatContext()
 
   const {
     isOpeningStatement,
@@ -25,16 +21,20 @@ const SuggestedQuestions: FC<SuggestedQuestionsProps> = ({
     return null
 
   return (
-    <div className='flex flex-wrap'>
+    <div className="flex flex-wrap">
       {suggestedQuestions.filter(q => !!q && q.trim()).map((question, index) => (
-        <Button
+        <div
           key={index}
-          variant='secondary-accent'
-          className={klassName}
-          onClick={() => onSend?.(question)}
+          className={cn(
+            'mt-1 mr-1 inline-flex max-w-full shrink-0 cursor-pointer flex-wrap rounded-lg border-[0.5px] border-components-button-secondary-border bg-components-button-secondary-bg px-3.5 py-2 system-sm-medium text-components-button-secondary-accent-text shadow-xs last:mr-0 hover:border-components-button-secondary-border-hover hover:bg-components-button-secondary-bg-hover',
+            readonly && 'pointer-events-none opacity-50',
+          )}
+          onClick={() => !readonly && onSend?.(question)}
+          data-testid="suggested-question"
         >
           {question}
-        </Button>),
+        </div>
+      ),
       )}
     </div>
   )
