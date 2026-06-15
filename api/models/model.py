@@ -8,7 +8,7 @@ from datetime import datetime
 from decimal import Decimal
 from enum import StrEnum, auto
 from functools import lru_cache
-from typing import TYPE_CHECKING, Any, Literal, NotRequired, TypedDict, cast
+from typing import TYPE_CHECKING, Any, Literal, NotRequired, TypedDict, cast, override
 from uuid import uuid4
 
 import sqlalchemy as sa
@@ -366,6 +366,10 @@ class AppMode(StrEnum):
     CHAT = "chat"
     ADVANCED_CHAT = "advanced-chat"
     AGENT_CHAT = "agent-chat"
+    # New Agent App type backed by the Dify Agent runtime (distinct from the
+    # legacy ``agent-chat`` ReAct app). The app is bound 1:1 to a roster Agent
+    # via ``Agent.app_id``; its configuration lives in the Agent Soul snapshot.
+    AGENT = "agent"
     CHANNEL = "channel"
     RAG_PIPELINE = "rag-pipeline"
 
@@ -459,6 +463,27 @@ class App(Base):
         return None
 
     @property
+    def bound_agent_id(self) -> str | None:
+        """For an Agent App (mode=agent), the roster Agent it is backed by.
+
+        Resolved via ``Agent.app_id`` so the console can open the Composer in
+        roster-detail mode from the app id. ``None`` for non-agent apps.
+        """
+        if self.mode != AppMode.AGENT:
+            return None
+        from .agent import Agent, AgentScope, AgentSource, AgentStatus
+
+        agent = db.session.scalar(
+            select(Agent).where(
+                Agent.app_id == self.id,
+                Agent.scope == AgentScope.ROSTER,
+                Agent.source == AgentSource.AGENT_APP,
+                Agent.status == AgentStatus.ACTIVE,
+            )
+        )
+        return agent.id if agent else None
+
+    @property
     def api_base_url(self) -> str:
         base = dify_config.SERVICE_API_URL or request.host_url.rstrip("/")
         return normalize_api_base_url(base)
@@ -492,8 +517,8 @@ class App(Base):
 
     @property
     def deleted_tools(self) -> list[DeletedToolInfo]:
+        from core.plugin.plugin_service import PluginService
         from core.tools.tool_manager import ToolManager, ToolProviderType
-        from services.plugin.plugin_service import PluginService
 
         # get agent mode tools
         app_model_config = self.app_model_config
@@ -1128,7 +1153,7 @@ class Conversation(Base):
                     tenant_resolver=tenant_resolver,
                 )
             elif isinstance(value, list):
-                value_list = cast(list[Any], value)
+                value_list = value
                 if all(
                     isinstance(item, dict)
                     and cast(dict[str, Any], item).get("dify_model_identity") == FILE_MODEL_IDENTITY
@@ -1153,12 +1178,12 @@ class Conversation(Base):
     def inputs(self, value: Mapping[str, Any]):
         inputs = dict(value)
         for k, v in inputs.items():
-            if isinstance(v, File):
-                inputs[k] = v.model_dump()
-            elif isinstance(v, list):
-                v_list = cast(list[Any], v)
-                if all(isinstance(item, File) for item in v_list):
-                    inputs[k] = [item.model_dump() for item in v_list if isinstance(item, File)]
+            match v:
+                case File():
+                    inputs[k] = v.model_dump()
+                case list():
+                    if all(isinstance(item, File) for item in v):
+                        inputs[k] = [item.model_dump() for item in v if isinstance(item, File)]
         self._inputs = inputs
 
     @property
@@ -1470,7 +1495,7 @@ class Message(Base):
                     tenant_resolver=tenant_resolver,
                 )
             elif isinstance(value, list):
-                value_list = cast(list[Any], value)
+                value_list = value
                 if all(
                     isinstance(item, dict)
                     and cast(dict[str, Any], item).get("dify_model_identity") == FILE_MODEL_IDENTITY
@@ -1497,7 +1522,7 @@ class Message(Base):
             if isinstance(v, File):
                 inputs[k] = v.model_dump()
             elif isinstance(v, list):
-                v_list = cast(list[Any], v)
+                v_list = v
                 if all(isinstance(item, File) for item in v_list):
                     inputs[k] = [item.model_dump() for item in v_list if isinstance(item, File)]
         self._inputs = inputs
@@ -2033,10 +2058,12 @@ class EndUser(Base, UserMixin):
     )
 
     @property
+    @override
     def is_anonymous(self) -> Literal[False]:
         return False
 
     @is_anonymous.setter
+    @override
     def is_anonymous(self, value: bool) -> None:
         self._is_anonymous = value
 
@@ -2474,7 +2501,7 @@ class Tag(TypeBase):
         sa.Index("tag_name_idx", "name"),
     )
 
-    TAG_TYPE_LIST = ["knowledge", "app"]
+    TAG_TYPE_LIST = ["knowledge", "app", "snippet"]
 
     id: Mapped[str] = mapped_column(
         StringUUID, insert_default=lambda: str(uuid4()), default_factory=lambda: str(uuid4()), init=False

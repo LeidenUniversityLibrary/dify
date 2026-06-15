@@ -24,6 +24,7 @@ import {
   zGetAppFeedbacksResponse,
   zGetAppsAnnotationReplyByActionStatusByJobIdPath,
   zGetAppsAnnotationReplyByActionStatusByJobIdResponse,
+  zGetAppsAnnotationsQuery,
   zGetAppsAnnotationsResponse,
   zGetConversationsByCIdVariablesPath,
   zGetConversationsByCIdVariablesQuery,
@@ -35,6 +36,7 @@ import {
   zGetDatasetsByDatasetIdDocumentsByDocumentIdDownloadPath,
   zGetDatasetsByDatasetIdDocumentsByDocumentIdDownloadResponse,
   zGetDatasetsByDatasetIdDocumentsByDocumentIdPath,
+  zGetDatasetsByDatasetIdDocumentsByDocumentIdQuery,
   zGetDatasetsByDatasetIdDocumentsByDocumentIdResponse,
   zGetDatasetsByDatasetIdDocumentsByDocumentIdSegmentsBySegmentIdChildChunksPath,
   zGetDatasetsByDatasetIdDocumentsByDocumentIdSegmentsBySegmentIdChildChunksQuery,
@@ -45,6 +47,7 @@ import {
   zGetDatasetsByDatasetIdDocumentsByDocumentIdSegmentsQuery,
   zGetDatasetsByDatasetIdDocumentsByDocumentIdSegmentsResponse,
   zGetDatasetsByDatasetIdDocumentsPath,
+  zGetDatasetsByDatasetIdDocumentsQuery,
   zGetDatasetsByDatasetIdDocumentsResponse,
   zGetDatasetsByDatasetIdMetadataBuiltInPath,
   zGetDatasetsByDatasetIdMetadataBuiltInResponse,
@@ -57,6 +60,7 @@ import {
   zGetDatasetsByDatasetIdResponse,
   zGetDatasetsByDatasetIdTagsPath,
   zGetDatasetsByDatasetIdTagsResponse,
+  zGetDatasetsQuery,
   zGetDatasetsResponse,
   zGetDatasetsTagsResponse,
   zGetEndUsersByEndUserIdPath,
@@ -85,11 +89,13 @@ import {
   zGetWorkspacesCurrentModelsModelTypesByModelTypePath,
   zGetWorkspacesCurrentModelsModelTypesByModelTypeResponse,
   zPatchDatasetsByDatasetIdBody,
+  zPatchDatasetsByDatasetIdDocumentsByDocumentIdBody,
   zPatchDatasetsByDatasetIdDocumentsByDocumentIdPath,
   zPatchDatasetsByDatasetIdDocumentsByDocumentIdResponse,
   zPatchDatasetsByDatasetIdDocumentsByDocumentIdSegmentsBySegmentIdChildChunksByChildChunkIdBody,
   zPatchDatasetsByDatasetIdDocumentsByDocumentIdSegmentsBySegmentIdChildChunksByChildChunkIdPath,
   zPatchDatasetsByDatasetIdDocumentsByDocumentIdSegmentsBySegmentIdChildChunksByChildChunkIdResponse,
+  zPatchDatasetsByDatasetIdDocumentsStatusByActionBody,
   zPatchDatasetsByDatasetIdDocumentsStatusByActionPath,
   zPatchDatasetsByDatasetIdDocumentsStatusByActionResponse,
   zPatchDatasetsByDatasetIdMetadataByMetadataIdBody,
@@ -117,8 +123,10 @@ import {
   zPostConversationsByCIdNamePath,
   zPostConversationsByCIdNameResponse,
   zPostDatasetsBody,
+  zPostDatasetsByDatasetIdDocumentCreateByFile2Body,
   zPostDatasetsByDatasetIdDocumentCreateByFile2Path,
   zPostDatasetsByDatasetIdDocumentCreateByFile2Response,
+  zPostDatasetsByDatasetIdDocumentCreateByFileBody,
   zPostDatasetsByDatasetIdDocumentCreateByFilePath,
   zPostDatasetsByDatasetIdDocumentCreateByFileResponse,
   zPostDatasetsByDatasetIdDocumentCreateByText2Body,
@@ -136,8 +144,10 @@ import {
   zPostDatasetsByDatasetIdDocumentsByDocumentIdSegmentsBySegmentIdResponse,
   zPostDatasetsByDatasetIdDocumentsByDocumentIdSegmentsPath,
   zPostDatasetsByDatasetIdDocumentsByDocumentIdSegmentsResponse,
+  zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFile2Body,
   zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFile2Path,
   zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFile2Response,
+  zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFileBody,
   zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFilePath,
   zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFileResponse,
   zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByText2Body,
@@ -160,8 +170,10 @@ import {
   zPostDatasetsByDatasetIdMetadataBuiltInByActionResponse,
   zPostDatasetsByDatasetIdMetadataPath,
   zPostDatasetsByDatasetIdMetadataResponse,
+  zPostDatasetsByDatasetIdPipelineDatasourceNodesByNodeIdRunBody,
   zPostDatasetsByDatasetIdPipelineDatasourceNodesByNodeIdRunPath,
   zPostDatasetsByDatasetIdPipelineDatasourceNodesByNodeIdRunResponse,
+  zPostDatasetsByDatasetIdPipelineRunBody,
   zPostDatasetsByDatasetIdPipelineRunPath,
   zPostDatasetsByDatasetIdPipelineRunResponse,
   zPostDatasetsByDatasetIdRetrieveBody,
@@ -199,16 +211,8 @@ import {
   zPutConversationsByCIdVariablesByVariableIdResponse,
 } from './zod.gen'
 
-/**
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
- */
 export const get = oc
   .route({
-    deprecated: true,
-    description:
-      'Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getRoot',
@@ -226,16 +230,11 @@ export const root = {
  *
  * Get all feedbacks for the application
  * Returns paginated list of all feedback submitted for messages in this app.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get2 = oc
   .route({
-    deprecated: true,
     description:
-      'Get all feedbacks for the application\nReturns paginated list of all feedback submitted for messages in this app.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Get all feedbacks for the application\nReturns paginated list of all feedback submitted for messages in this app.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getAppFeedbacks',
@@ -258,16 +257,10 @@ export const app = {
  * Get the status of an annotation reply action job
  *
  * Get the status of an annotation reply action job
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get3 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get the status of an annotation reply action job\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get the status of an annotation reply action job',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getAppsAnnotationReplyByActionStatusByJobId',
@@ -290,16 +283,10 @@ export const status = {
  * Enable or disable annotation reply feature
  *
  * Enable or disable annotation reply feature
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post = oc
   .route({
-    deprecated: true,
-    description:
-      'Enable or disable annotation reply feature\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Enable or disable annotation reply feature',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postAppsAnnotationReplyByAction',
@@ -386,6 +373,7 @@ export const get4 = oc
     summary: 'List annotations for the application',
     tags: ['service_api'],
   })
+  .input(z.object({ query: zGetAppsAnnotationsQuery.optional() }))
   .output(zGetAppsAnnotationsResponse)
 
 /**
@@ -423,16 +411,11 @@ export const apps = {
  *
  * Convert audio to text using speech-to-text
  * Accepts an audio file upload and returns the transcribed text.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post3 = oc
   .route({
-    deprecated: true,
     description:
-      'Convert audio to text using speech-to-text\nAccepts an audio file upload and returns the transcribed text.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Convert audio to text using speech-to-text\nAccepts an audio file upload and returns the transcribed text.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postAudioToText',
@@ -450,16 +433,10 @@ export const audioToText = {
  * Stop a running chat message generation
  *
  * Stop a running chat message generation
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post4 = oc
   .route({
-    deprecated: true,
-    description:
-      'Stop a running chat message generation\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Stop a running chat message generation',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postChatMessagesByTaskIdStop',
@@ -484,16 +461,11 @@ export const byTaskId = {
  * Send a message in a chat conversation
  * This endpoint handles chat messages for chat, agent chat, and advanced chat applications.
  * Supports conversation management and both blocking and streaming response modes.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post5 = oc
   .route({
-    deprecated: true,
     description:
-      'Send a message in a chat conversation\nThis endpoint handles chat messages for chat, agent chat, and advanced chat applications.\nSupports conversation management and both blocking and streaming response modes.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Send a message in a chat conversation\nThis endpoint handles chat messages for chat, agent chat, and advanced chat applications.\nSupports conversation management and both blocking and streaming response modes.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postChatMessages',
@@ -513,16 +485,10 @@ export const chatMessages = {
  * Stop a running completion task
  *
  * Stop a running completion task
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post6 = oc
   .route({
-    deprecated: true,
-    description:
-      'Stop a running completion task\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Stop a running completion task',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postCompletionMessagesByTaskIdStop',
@@ -547,16 +513,11 @@ export const byTaskId2 = {
  * Create a completion for the given prompt
  * This endpoint generates a completion based on the provided inputs and query.
  * Supports both blocking and streaming response modes.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post7 = oc
   .route({
-    deprecated: true,
     description:
-      'Create a completion for the given prompt\nThis endpoint generates a completion based on the provided inputs and query.\nSupports both blocking and streaming response modes.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Create a completion for the given prompt\nThis endpoint generates a completion based on the provided inputs and query.\nSupports both blocking and streaming response modes.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postCompletionMessages',
@@ -576,16 +537,10 @@ export const completionMessages = {
  * Rename a conversation or auto-generate a name
  *
  * Rename a conversation or auto-generate a name
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post8 = oc
   .route({
-    deprecated: true,
-    description:
-      'Rename a conversation or auto-generate a name\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Rename a conversation or auto-generate a name',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postConversationsByCIdName',
@@ -692,16 +647,11 @@ export const byCId = {
  *
  * List all conversations for the current user
  * Supports pagination using last_id and limit parameters.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get6 = oc
   .route({
-    deprecated: true,
     description:
-      'List all conversations for the current user\nSupports pagination using last_id and limit parameters.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'List all conversations for the current user\nSupports pagination using last_id and limit parameters.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getConversations',
@@ -722,16 +672,11 @@ export const conversations = {
  *
  * Upload a file to a knowledgebase pipeline
  * Accepts a single file upload via multipart/form-data.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post9 = oc
   .route({
-    deprecated: true,
     description:
-      'Upload a file to a knowledgebase pipeline\nAccepts a single file upload via multipart/form-data.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Upload a file to a knowledgebase pipeline\nAccepts a single file upload via multipart/form-data.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsPipelineFileUpload',
@@ -813,16 +758,10 @@ export const delete3 = oc
  * Get all knowledge type tags
  *
  * Get all knowledge type tags
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get7 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get all knowledge type tags\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get all knowledge type tags',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsTags',
@@ -834,16 +773,10 @@ export const get7 = oc
 
 /**
  * Update a knowledge type tag
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const patch = oc
   .route({
-    deprecated: true,
-    description:
-      'Update a knowledge type tag\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Update a knowledge type tag',
     inputStructure: 'detailed',
     method: 'PATCH',
     operationId: 'patchDatasetsTags',
@@ -857,16 +790,10 @@ export const patch = oc
  * Add a knowledge type tag
  *
  * Add a knowledge type tag
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post12 = oc
   .route({
-    deprecated: true,
-    description:
-      'Add a knowledge type tag\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Add a knowledge type tag',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsTags',
@@ -888,44 +815,42 @@ export const tags = {
 
 /**
  * Create a new document by uploading a file
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post13 = oc
   .route({
-    deprecated: true,
-    description:
-      'Create a new document by uploading a file\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Create a new document by uploading a file',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentCreateByFile',
     path: '/datasets/{dataset_id}/document/create-by-file',
     tags: ['service_api'],
   })
-  .input(z.object({ params: zPostDatasetsByDatasetIdDocumentCreateByFilePath }))
+  .input(
+    z.object({
+      body: zPostDatasetsByDatasetIdDocumentCreateByFileBody,
+      params: zPostDatasetsByDatasetIdDocumentCreateByFilePath,
+    }),
+  )
   .output(zPostDatasetsByDatasetIdDocumentCreateByFileResponse)
 
 /**
  * Create a new document by uploading a file
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post14 = oc
   .route({
-    deprecated: true,
-    description:
-      'Create a new document by uploading a file\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Create a new document by uploading a file',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentCreateByFile',
     path: '/datasets/{dataset_id}/document/create_by_file',
     tags: ['service_api'],
   })
-  .input(z.object({ params: zPostDatasetsByDatasetIdDocumentCreateByFile2Path }))
+  .input(
+    z.object({
+      body: zPostDatasetsByDatasetIdDocumentCreateByFile2Body,
+      params: zPostDatasetsByDatasetIdDocumentCreateByFile2Path,
+    }),
+  )
   .output(zPostDatasetsByDatasetIdDocumentCreateByFile2Response)
 
 export const createByFile = {
@@ -934,16 +859,10 @@ export const createByFile = {
 
 /**
  * Create a new document by providing text content
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post15 = oc
   .route({
-    deprecated: true,
-    description:
-      'Create a new document by providing text content\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Create a new document by providing text content',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentCreateByText',
@@ -961,15 +880,13 @@ export const post15 = oc
 /**
  * Deprecated legacy alias for creating a new document by providing text content. Use /datasets/{dataset_id}/document/create-by-text instead.
  *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
  * @deprecated
  */
 export const post16 = oc
   .route({
     deprecated: true,
     description:
-      'Deprecated legacy alias for creating a new document by providing text content. Use /datasets/{dataset_id}/document/create-by-text instead.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Deprecated legacy alias for creating a new document by providing text content. Use /datasets/{dataset_id}/document/create-by-text instead.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentCreateByText',
@@ -995,16 +912,10 @@ export const document_ = {
 
 /**
  * Download selected uploaded documents as a single ZIP archive
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post17 = oc
   .route({
-    deprecated: true,
-    description:
-      'Download selected uploaded documents as a single ZIP archive\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Download selected uploaded documents as a single ZIP archive',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentsDownloadZip',
@@ -1027,16 +938,10 @@ export const downloadZip = {
  * Update metadata for multiple documents
  *
  * Update metadata for multiple documents
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post18 = oc
   .route({
-    deprecated: true,
-    description:
-      'Update metadata for multiple documents\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Update metadata for multiple documents',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentsMetadata',
@@ -1073,16 +978,11 @@ export const metadata = {
  * NotFound: If the dataset with the given ID does not exist.
  * Forbidden: If the user does not have permission.
  * InvalidActionError: If the action is invalid or cannot be performed.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const patch2 = oc
   .route({
-    deprecated: true,
     description:
-      'Batch update document status\nArgs:\n    tenant_id: tenant id\n    dataset_id: dataset id\n    action: action to perform (Literal["enable", "disable", "archive", "un_archive"])\n\nReturns:\n    dict: A dictionary with a key \'result\' and a value \'success\'\n    int: HTTP status code 200 indicating that the operation was successful.\n\nRaises:\n    NotFound: If the dataset with the given ID does not exist.\n    Forbidden: If the user does not have permission.\n    InvalidActionError: If the action is invalid or cannot be performed.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Batch update document status\nArgs:\n    tenant_id: tenant id\n    dataset_id: dataset id\n    action: action to perform (Literal["enable", "disable", "archive", "un_archive"])\n\nReturns:\n    dict: A dictionary with a key \'result\' and a value \'success\'\n    int: HTTP status code 200 indicating that the operation was successful.\n\nRaises:\n    NotFound: If the dataset with the given ID does not exist.\n    Forbidden: If the user does not have permission.\n    InvalidActionError: If the action is invalid or cannot be performed.',
     inputStructure: 'detailed',
     method: 'PATCH',
     operationId: 'patchDatasetsByDatasetIdDocumentsStatusByAction',
@@ -1090,7 +990,12 @@ export const patch2 = oc
     summary: 'Batch update document status',
     tags: ['service_api'],
   })
-  .input(z.object({ params: zPatchDatasetsByDatasetIdDocumentsStatusByActionPath }))
+  .input(
+    z.object({
+      body: zPatchDatasetsByDatasetIdDocumentsStatusByActionBody,
+      params: zPatchDatasetsByDatasetIdDocumentsStatusByActionPath,
+    }),
+  )
   .output(zPatchDatasetsByDatasetIdDocumentsStatusByActionResponse)
 
 export const byAction2 = {
@@ -1103,16 +1008,10 @@ export const status2 = {
 
 /**
  * Get indexing status for documents in a batch
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get8 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get indexing status for documents in a batch\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get indexing status for documents in a batch',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdDocumentsByBatchIndexingStatus',
@@ -1132,16 +1031,10 @@ export const byBatch = {
 
 /**
  * Get a signed download URL for a document's original uploaded file
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get9 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get a signed download URL for a document\'s original uploaded file\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get a signed download URL for a document\'s original uploaded file',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdDocumentsByDocumentIdDownload',
@@ -1181,16 +1074,10 @@ export const delete4 = oc
 
 /**
  * Update a specific child chunk
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const patch3 = oc
   .route({
-    deprecated: true,
-    description:
-      'Update a specific child chunk\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Update a specific child chunk',
     inputStructure: 'detailed',
     method: 'PATCH',
     operationId:
@@ -1216,16 +1103,10 @@ export const byChildChunkId = {
 
 /**
  * List child chunks for a segment
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get10 = oc
   .route({
-    deprecated: true,
-    description:
-      'List child chunks for a segment\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'List child chunks for a segment',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdDocumentsByDocumentIdSegmentsBySegmentIdChildChunks',
@@ -1243,16 +1124,10 @@ export const get10 = oc
 
 /**
  * Create a new child chunk for a segment
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post19 = oc
   .route({
-    deprecated: true,
-    description:
-      'Create a new child chunk for a segment\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Create a new child chunk for a segment',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentsByDocumentIdSegmentsBySegmentIdChildChunks',
@@ -1293,16 +1168,10 @@ export const delete5 = oc
 
 /**
  * Get a specific segment by ID
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get11 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get a specific segment by ID\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get a specific segment by ID',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdDocumentsByDocumentIdSegmentsBySegmentId',
@@ -1314,16 +1183,10 @@ export const get11 = oc
 
 /**
  * Update a specific segment
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post20 = oc
   .route({
-    deprecated: true,
-    description:
-      'Update a specific segment\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Update a specific segment',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentsByDocumentIdSegmentsBySegmentId',
@@ -1347,16 +1210,10 @@ export const bySegmentId = {
 
 /**
  * List segments in a document
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get12 = oc
   .route({
-    deprecated: true,
-    description:
-      'List segments in a document\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'List segments in a document',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdDocumentsByDocumentIdSegments',
@@ -1373,16 +1230,10 @@ export const get12 = oc
 
 /**
  * Create segments in a document
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post21 = oc
   .route({
-    deprecated: true,
-    description:
-      'Create segments in a document\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Create segments in a document',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentsByDocumentIdSegments',
@@ -1406,28 +1257,29 @@ export const segments = {
 /**
  * Deprecated legacy alias for updating an existing document by uploading a file. Use PATCH /datasets/{dataset_id}/documents/{document_id} instead.
  *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
  * @deprecated
  */
 export const post22 = oc
   .route({
     deprecated: true,
     description:
-      'Deprecated legacy alias for updating an existing document by uploading a file. Use PATCH /datasets/{dataset_id}/documents/{document_id} instead.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Deprecated legacy alias for updating an existing document by uploading a file. Use PATCH /datasets/{dataset_id}/documents/{document_id} instead.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFile',
     path: '/datasets/{dataset_id}/documents/{document_id}/update-by-file',
     tags: ['service_api'],
   })
-  .input(z.object({ params: zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFilePath }))
+  .input(
+    z.object({
+      body: zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFileBody.optional(),
+      params: zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFilePath,
+    }),
+  )
   .output(zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFileResponse)
 
 /**
  * Deprecated legacy alias for updating an existing document by uploading a file. Use PATCH /datasets/{dataset_id}/documents/{document_id} instead.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
  *
  * @deprecated
  */
@@ -1435,14 +1287,19 @@ export const post23 = oc
   .route({
     deprecated: true,
     description:
-      'Deprecated legacy alias for updating an existing document by uploading a file. Use PATCH /datasets/{dataset_id}/documents/{document_id} instead.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Deprecated legacy alias for updating an existing document by uploading a file. Use PATCH /datasets/{dataset_id}/documents/{document_id} instead.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFile',
     path: '/datasets/{dataset_id}/documents/{document_id}/update_by_file',
     tags: ['service_api'],
   })
-  .input(z.object({ params: zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFile2Path }))
+  .input(
+    z.object({
+      body: zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFile2Body.optional(),
+      params: zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFile2Path,
+    }),
+  )
   .output(zPostDatasetsByDatasetIdDocumentsByDocumentIdUpdateByFile2Response)
 
 export const updateByFile = {
@@ -1451,16 +1308,10 @@ export const updateByFile = {
 
 /**
  * Update an existing document by providing text content
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post24 = oc
   .route({
-    deprecated: true,
-    description:
-      'Update an existing document by providing text content\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Update an existing document by providing text content',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentsByDocumentIdUpdateByText',
@@ -1478,15 +1329,13 @@ export const post24 = oc
 /**
  * Deprecated legacy alias for updating an existing document by providing text content. Use /datasets/{dataset_id}/documents/{document_id}/update-by-text instead.
  *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
  * @deprecated
  */
 export const post25 = oc
   .route({
     deprecated: true,
     description:
-      'Deprecated legacy alias for updating an existing document by providing text content. Use /datasets/{dataset_id}/documents/{document_id}/update-by-text instead.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Deprecated legacy alias for updating an existing document by providing text content. Use /datasets/{dataset_id}/documents/{document_id}/update-by-text instead.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdDocumentsByDocumentIdUpdateByText',
@@ -1526,44 +1375,42 @@ export const delete6 = oc
 
 /**
  * Get a specific document by ID
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get13 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get a specific document by ID\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get a specific document by ID',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdDocumentsByDocumentId',
     path: '/datasets/{dataset_id}/documents/{document_id}',
     tags: ['service_api'],
   })
-  .input(z.object({ params: zGetDatasetsByDatasetIdDocumentsByDocumentIdPath }))
+  .input(
+    z.object({
+      params: zGetDatasetsByDatasetIdDocumentsByDocumentIdPath,
+      query: zGetDatasetsByDatasetIdDocumentsByDocumentIdQuery.optional(),
+    }),
+  )
   .output(zGetDatasetsByDatasetIdDocumentsByDocumentIdResponse)
 
 /**
  * Update an existing document by uploading a file
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const patch4 = oc
   .route({
-    deprecated: true,
-    description:
-      'Update an existing document by uploading a file\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Update an existing document by uploading a file',
     inputStructure: 'detailed',
     method: 'PATCH',
     operationId: 'patchDatasetsByDatasetIdDocumentsByDocumentId',
     path: '/datasets/{dataset_id}/documents/{document_id}',
     tags: ['service_api'],
   })
-  .input(z.object({ params: zPatchDatasetsByDatasetIdDocumentsByDocumentIdPath }))
+  .input(
+    z.object({
+      body: zPatchDatasetsByDatasetIdDocumentsByDocumentIdBody.optional(),
+      params: zPatchDatasetsByDatasetIdDocumentsByDocumentIdPath,
+    }),
+  )
   .output(zPatchDatasetsByDatasetIdDocumentsByDocumentIdResponse)
 
 export const byDocumentId = {
@@ -1578,23 +1425,22 @@ export const byDocumentId = {
 
 /**
  * List all documents in a dataset
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get14 = oc
   .route({
-    deprecated: true,
-    description:
-      'List all documents in a dataset\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'List all documents in a dataset',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdDocuments',
     path: '/datasets/{dataset_id}/documents',
     tags: ['service_api'],
   })
-  .input(z.object({ params: zGetDatasetsByDatasetIdDocumentsPath }))
+  .input(
+    z.object({
+      params: zGetDatasetsByDatasetIdDocumentsPath,
+      query: zGetDatasetsByDatasetIdDocumentsQuery.optional(),
+    }),
+  )
   .output(zGetDatasetsByDatasetIdDocumentsResponse)
 
 export const documents = {
@@ -1611,16 +1457,11 @@ export const documents = {
  *
  * Perform hit testing on a dataset
  * Tests retrieval performance for the specified dataset.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post26 = oc
   .route({
-    deprecated: true,
     description:
-      'Perform hit testing on a dataset\nTests retrieval performance for the specified dataset.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Perform hit testing on a dataset\nTests retrieval performance for the specified dataset.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdHitTesting',
@@ -1644,16 +1485,10 @@ export const hitTesting = {
  * Enable or disable built-in metadata field
  *
  * Enable or disable built-in metadata field
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post27 = oc
   .route({
-    deprecated: true,
-    description:
-      'Enable or disable built-in metadata field\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Enable or disable built-in metadata field',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdMetadataBuiltInByAction',
@@ -1672,16 +1507,10 @@ export const byAction3 = {
  * Get all built-in metadata fields
  *
  * Get all built-in metadata fields
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get15 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get all built-in metadata fields\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get all built-in metadata fields',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdMetadataBuiltIn',
@@ -1720,16 +1549,10 @@ export const delete7 = oc
  * Update metadata name
  *
  * Update metadata name
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const patch5 = oc
   .route({
-    deprecated: true,
-    description:
-      'Update metadata name\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Update metadata name',
     inputStructure: 'detailed',
     method: 'PATCH',
     operationId: 'patchDatasetsByDatasetIdMetadataByMetadataId',
@@ -1754,16 +1577,10 @@ export const byMetadataId = {
  * Get all metadata for a dataset
  *
  * Get all metadata for a dataset
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get16 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get all metadata for a dataset\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get all metadata for a dataset',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdMetadata',
@@ -1778,16 +1595,10 @@ export const get16 = oc
  * Create metadata for a dataset
  *
  * Create metadata for a dataset
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post28 = oc
   .route({
-    deprecated: true,
-    description:
-      'Create metadata for a dataset\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Create metadata for a dataset',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdMetadata',
@@ -1815,16 +1626,10 @@ export const metadata2 = {
  * Resource for getting datasource plugins
  *
  * List all datasource plugins for a rag pipeline
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get17 = oc
   .route({
-    deprecated: true,
-    description:
-      'List all datasource plugins for a rag pipeline\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'List all datasource plugins for a rag pipeline',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdPipelineDatasourcePlugins',
@@ -1848,16 +1653,10 @@ export const datasourcePlugins = {
  * Resource for getting datasource plugins
  *
  * Run a datasource node for a rag pipeline
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post29 = oc
   .route({
-    deprecated: true,
-    description:
-      'Run a datasource node for a rag pipeline\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Run a datasource node for a rag pipeline',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdPipelineDatasourceNodesByNodeIdRun',
@@ -1865,7 +1664,12 @@ export const post29 = oc
     summary: 'Resource for getting datasource plugins',
     tags: ['service_api'],
   })
-  .input(z.object({ params: zPostDatasetsByDatasetIdPipelineDatasourceNodesByNodeIdRunPath }))
+  .input(
+    z.object({
+      body: zPostDatasetsByDatasetIdPipelineDatasourceNodesByNodeIdRunBody,
+      params: zPostDatasetsByDatasetIdPipelineDatasourceNodesByNodeIdRunPath,
+    }),
+  )
   .output(zPostDatasetsByDatasetIdPipelineDatasourceNodesByNodeIdRunResponse)
 
 export const run = {
@@ -1888,16 +1692,10 @@ export const datasource = {
  * Resource for running a rag pipeline
  *
  * Run a datasource node for a rag pipeline
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post30 = oc
   .route({
-    deprecated: true,
-    description:
-      'Run a datasource node for a rag pipeline\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Run a datasource node for a rag pipeline',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdPipelineRun',
@@ -1905,7 +1703,12 @@ export const post30 = oc
     summary: 'Resource for running a rag pipeline',
     tags: ['service_api'],
   })
-  .input(z.object({ params: zPostDatasetsByDatasetIdPipelineRunPath }))
+  .input(
+    z.object({
+      body: zPostDatasetsByDatasetIdPipelineRunBody,
+      params: zPostDatasetsByDatasetIdPipelineRunPath,
+    }),
+  )
   .output(zPostDatasetsByDatasetIdPipelineRunResponse)
 
 export const run2 = {
@@ -1923,16 +1726,11 @@ export const pipeline2 = {
  *
  * Perform hit testing on a dataset
  * Tests retrieval performance for the specified dataset.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post31 = oc
   .route({
-    deprecated: true,
     description:
-      'Perform hit testing on a dataset\nTests retrieval performance for the specified dataset.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Perform hit testing on a dataset\nTests retrieval performance for the specified dataset.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasetsByDatasetIdRetrieve',
@@ -1956,16 +1754,10 @@ export const retrieve = {
  * Get all knowledge type tags
  *
  * Get tags bound to a specific dataset
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get18 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get tags bound to a specific dataset\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get tags bound to a specific dataset',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetIdTags',
@@ -2013,16 +1805,10 @@ export const delete8 = oc
 
 /**
  * Get a specific dataset by ID
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get19 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get a specific dataset by ID\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get a specific dataset by ID',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasetsByDatasetId',
@@ -2034,16 +1820,10 @@ export const get19 = oc
 
 /**
  * Update an existing dataset
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const patch6 = oc
   .route({
-    deprecated: true,
-    description:
-      'Update an existing dataset\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Update an existing dataset',
     inputStructure: 'detailed',
     method: 'PATCH',
     operationId: 'patchDatasetsByDatasetId',
@@ -2070,16 +1850,10 @@ export const byDatasetId = {
  * Resource for getting datasets
  *
  * List all datasets
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get20 = oc
   .route({
-    deprecated: true,
-    description:
-      'List all datasets\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'List all datasets',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getDatasets',
@@ -2087,22 +1861,17 @@ export const get20 = oc
     summary: 'Resource for getting datasets',
     tags: ['service_api'],
   })
+  .input(z.object({ query: zGetDatasetsQuery.optional() }))
   .output(zGetDatasetsResponse)
 
 /**
  * Resource for creating datasets
  *
  * Create a new dataset
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post32 = oc
   .route({
-    deprecated: true,
-    description:
-      'Create a new dataset\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Create a new dataset',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postDatasets',
@@ -2127,16 +1896,11 @@ export const datasets = {
  * Get an end user by ID
  * This endpoint is scoped to the current app token's tenant/app to prevent
  * cross-tenant/app access when an end-user ID is known.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get21 = oc
   .route({
-    deprecated: true,
     description:
-      'Get an end user by ID\nThis endpoint is scoped to the current app token\'s tenant/app to prevent\ncross-tenant/app access when an end-user ID is known.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Get an end user by ID\nThis endpoint is scoped to the current app token\'s tenant/app to prevent\ncross-tenant/app access when an end-user ID is known.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getEndUsersByEndUserId',
@@ -2185,16 +1949,11 @@ export const upload = {
  * Preview or download a file uploaded via Service API
  * Provides secure file preview/download functionality.
  * Files can only be accessed if they belong to messages within the requesting app's context.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get22 = oc
   .route({
-    deprecated: true,
     description:
-      'Preview or download a file uploaded via Service API\nProvides secure file preview/download functionality.\nFiles can only be accessed if they belong to messages within the requesting app\'s context.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Preview or download a file uploaded via Service API\nProvides secure file preview/download functionality.\nFiles can only be accessed if they belong to messages within the requesting app\'s context.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getFilesByFileIdPreview',
@@ -2225,16 +1984,10 @@ export const files = {
 
 /**
  * Get a paused human input form by token
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get23 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get a paused human input form by token\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get a paused human input form by token',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getFormHumanInputByFormToken',
@@ -2246,16 +1999,10 @@ export const get23 = oc
 
 /**
  * Submit a paused human input form by token
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post34 = oc
   .route({
-    deprecated: true,
-    description:
-      'Submit a paused human input form by token\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Submit a paused human input form by token',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postFormHumanInputByFormToken',
@@ -2288,16 +2035,11 @@ export const form = {
  *
  * Get basic application information
  * Returns basic information about the application including name, description, tags, and mode.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get24 = oc
   .route({
-    deprecated: true,
     description:
-      'Get basic application information\nReturns basic information about the application including name, description, tags, and mode.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Get basic application information\nReturns basic information about the application including name, description, tags, and mode.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getInfo',
@@ -2316,16 +2058,11 @@ export const info = {
  *
  * Submit feedback for a message
  * Allows users to rate messages as like/dislike and provide optional feedback content.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post35 = oc
   .route({
-    deprecated: true,
     description:
-      'Submit feedback for a message\nAllows users to rate messages as like/dislike and provide optional feedback content.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Submit feedback for a message\nAllows users to rate messages as like/dislike and provide optional feedback content.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postMessagesByMessageIdFeedbacks',
@@ -2350,16 +2087,11 @@ export const feedbacks2 = {
  *
  * Get suggested follow-up questions for a message
  * Returns AI-generated follow-up questions based on the message content.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get25 = oc
   .route({
-    deprecated: true,
     description:
-      'Get suggested follow-up questions for a message\nReturns AI-generated follow-up questions based on the message content.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Get suggested follow-up questions for a message\nReturns AI-generated follow-up questions based on the message content.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getMessagesByMessageIdSuggested',
@@ -2384,16 +2116,11 @@ export const byMessageId = {
  *
  * List messages in a conversation
  * Retrieves messages with pagination support using first_id.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get26 = oc
   .route({
-    deprecated: true,
     description:
-      'List messages in a conversation\nRetrieves messages with pagination support using first_id.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'List messages in a conversation\nRetrieves messages with pagination support using first_id.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getMessages',
@@ -2414,16 +2141,11 @@ export const messages = {
  *
  * Get application metadata
  * Returns metadata about the application including configuration and settings.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get27 = oc
   .route({
-    deprecated: true,
     description:
-      'Get application metadata\nReturns metadata about the application including configuration and settings.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Get application metadata\nReturns metadata about the application including configuration and settings.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getMeta',
@@ -2442,16 +2164,11 @@ export const meta = {
  *
  * Retrieve application input parameters and configuration
  * Returns the input form parameters and configuration for the application.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get28 = oc
   .route({
-    deprecated: true,
     description:
-      'Retrieve application input parameters and configuration\nReturns the input form parameters and configuration for the application.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Retrieve application input parameters and configuration\nReturns the input form parameters and configuration for the application.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getParameters',
@@ -2470,16 +2187,11 @@ export const parameters = {
  *
  * Get application site configuration
  * Returns the site configuration for the application including theme, icons, and text.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get29 = oc
   .route({
-    deprecated: true,
     description:
-      'Get application site configuration\nReturns the site configuration for the application including theme, icons, and text.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Get application site configuration\nReturns the site configuration for the application including theme, icons, and text.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getSite',
@@ -2498,16 +2210,11 @@ export const site = {
  *
  * Convert text to audio using text-to-speech
  * Converts the provided text to audio using the specified voice.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post36 = oc
   .route({
-    deprecated: true,
     description:
-      'Convert text to audio using text-to-speech\nConverts the provided text to audio using the specified voice.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Convert text to audio using text-to-speech\nConverts the provided text to audio using the specified voice.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postTextToAudio',
@@ -2524,16 +2231,10 @@ export const textToAudio = {
 
 /**
  * Get workflow execution events stream after resume
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get30 = oc
   .route({
-    deprecated: true,
-    description:
-      'Get workflow execution events stream after resume\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Get workflow execution events stream after resume',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getWorkflowByTaskIdEvents',
@@ -2541,10 +2242,7 @@ export const get30 = oc
     tags: ['service_api'],
   })
   .input(
-    z.object({
-      params: zGetWorkflowByTaskIdEventsPath,
-      query: zGetWorkflowByTaskIdEventsQuery.optional(),
-    }),
+    z.object({ params: zGetWorkflowByTaskIdEventsPath, query: zGetWorkflowByTaskIdEventsQuery }),
   )
   .output(zGetWorkflowByTaskIdEventsResponse)
 
@@ -2565,16 +2263,11 @@ export const workflow = {
  *
  * Get workflow execution logs
  * Returns paginated workflow execution logs with filtering options.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get31 = oc
   .route({
-    deprecated: true,
     description:
-      'Get workflow execution logs\nReturns paginated workflow execution logs with filtering options.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Get workflow execution logs\nReturns paginated workflow execution logs with filtering options.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getWorkflowsLogs',
@@ -2594,16 +2287,11 @@ export const logs = {
  *
  * Get workflow run details
  * Returns detailed information about a specific workflow run.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get32 = oc
   .route({
-    deprecated: true,
     description:
-      'Get workflow run details\nReturns detailed information about a specific workflow run.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Get workflow run details\nReturns detailed information about a specific workflow run.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getWorkflowsRunByWorkflowRunId',
@@ -2624,16 +2312,11 @@ export const byWorkflowRunId = {
  * Execute a workflow
  * Runs a workflow with the provided inputs and returns the results.
  * Supports both blocking and streaming response modes.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post37 = oc
   .route({
-    deprecated: true,
     description:
-      'Execute a workflow\nRuns a workflow with the provided inputs and returns the results.\nSupports both blocking and streaming response modes.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Execute a workflow\nRuns a workflow with the provided inputs and returns the results.\nSupports both blocking and streaming response modes.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postWorkflowsRun',
@@ -2653,16 +2336,10 @@ export const run3 = {
  * Stop a running workflow task
  *
  * Stop a running workflow task
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post38 = oc
   .route({
-    deprecated: true,
-    description:
-      'Stop a running workflow task\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+    description: 'Stop a running workflow task',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postWorkflowsTasksByTaskIdStop',
@@ -2690,16 +2367,11 @@ export const tasks = {
  *
  * Execute a specific workflow by ID
  * Executes a specific workflow version identified by its ID.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const post39 = oc
   .route({
-    deprecated: true,
     description:
-      'Execute a specific workflow by ID\nExecutes a specific workflow version identified by its ID.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Execute a specific workflow by ID\nExecutes a specific workflow version identified by its ID.',
     inputStructure: 'detailed',
     method: 'POST',
     operationId: 'postWorkflowsByWorkflowIdRun',
@@ -2735,16 +2407,11 @@ export const workflows = {
  *
  * Get available models by model type
  * Returns a list of available models for the specified model type.
- *
- * Generated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.
- *
- * @deprecated
  */
 export const get33 = oc
   .route({
-    deprecated: true,
     description:
-      'Get available models by model type\nReturns a list of available models for the specified model type.\n\nGenerated contract types may be inaccurate because backend OpenAPI annotations are incomplete. Do not migrate callers until the generated contract is accurate.',
+      'Get available models by model type\nReturns a list of available models for the specified model type.',
     inputStructure: 'detailed',
     method: 'GET',
     operationId: 'getWorkspacesCurrentModelsModelTypesByModelType',

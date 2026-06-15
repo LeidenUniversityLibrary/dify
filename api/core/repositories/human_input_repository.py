@@ -2,7 +2,7 @@ import dataclasses
 import json
 from collections.abc import Mapping, Sequence
 from datetime import datetime
-from typing import Any, Protocol
+from typing import Any, Protocol, override
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
@@ -113,10 +113,12 @@ class _HumanInputFormRecipientEntityImpl(HumanInputFormRecipientEntity):
         self._recipient_model = recipient_model
 
     @property
+    @override
     def id(self) -> str:
         return self._recipient_model.id
 
     @property
+    @override
     def token(self) -> str:
         if self._recipient_model.access_token is None:
             raise AssertionError(f"access_token should not be None for recipient {self._recipient_model.id}")
@@ -144,10 +146,12 @@ class _HumanInputFormEntityImpl(HumanInputFormEntity):
         )
 
     @property
+    @override
     def id(self) -> str:
         return self._form_model.id
 
     @property
+    @override
     def submission_token(self) -> str | None:
         if self._console_recipient is not None:
             return self._console_recipient.access_token
@@ -156,30 +160,37 @@ class _HumanInputFormEntityImpl(HumanInputFormEntity):
         return self._interactive_surface_recipient.access_token
 
     @property
+    @override
     def recipients(self) -> list[HumanInputFormRecipientEntity]:
         return list(self._recipients)
 
     @property
+    @override
     def rendered_content(self) -> str:
         return self._form_model.rendered_content
 
     @property
+    @override
     def selected_action_id(self) -> str | None:
         return self._form_model.selected_action_id
 
     @property
+    @override
     def submitted_data(self) -> Mapping[str, Any] | None:
         return self._submitted_data
 
     @property
+    @override
     def submitted(self) -> bool:
         return self._form_model.submitted_at is not None
 
     @property
+    @override
     def status(self) -> HumanInputFormStatus:
         return self._form_model.status
 
     @property
+    @override
     def expiration_time(self) -> datetime:
         return self._form_model.expiration_time
 
@@ -277,24 +288,25 @@ class HumanInputFormRepositoryImpl:
             channel_payload=delivery_method.model_dump_json(),
         )
         recipients: list[HumanInputFormRecipient] = []
-        if isinstance(delivery_method, InteractiveSurfaceDeliveryMethod):
-            recipient_model = HumanInputFormRecipient(
-                form_id=form_id,
-                delivery_id=delivery_id,
-                recipient_type=RecipientType.STANDALONE_WEB_APP,
-                recipient_payload=StandaloneWebAppRecipientPayload().model_dump_json(),
-            )
-            recipients.append(recipient_model)
-        elif isinstance(delivery_method, EmailDeliveryMethod):
-            email_recipients_config = delivery_method.config.recipients
-            recipients.extend(
-                self._build_email_recipients(
-                    session=session,
+        match delivery_method:
+            case InteractiveSurfaceDeliveryMethod():
+                recipient_model = HumanInputFormRecipient(
                     form_id=form_id,
                     delivery_id=delivery_id,
-                    recipients_config=email_recipients_config,
+                    recipient_type=RecipientType.STANDALONE_WEB_APP,
+                    recipient_payload=StandaloneWebAppRecipientPayload().model_dump_json(),
                 )
-            )
+                recipients.append(recipient_model)
+            case EmailDeliveryMethod():
+                email_recipients_config = delivery_method.config.recipients
+                recipients.extend(
+                    self._build_email_recipients(
+                        session=session,
+                        form_id=form_id,
+                        delivery_id=delivery_id,
+                        recipients_config=email_recipients_config,
+                    )
+                )
 
         return _DeliveryAndRecipients(delivery=delivery_model, recipients=recipients)
 

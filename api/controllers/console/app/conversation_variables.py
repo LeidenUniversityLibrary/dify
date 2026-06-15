@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
-from controllers.common.schema import register_schema_models
+from controllers.common.schema import query_params_from_model, register_schema_models
 from controllers.console import console_ns
 from controllers.console.app.wraps import get_app_model
 from controllers.console.wraps import account_initialization_required, setup_required
@@ -19,7 +19,7 @@ from fields.base import ResponseModel
 from libs.helper import to_timestamp
 from libs.login import login_required
 from models import ConversationVariable
-from models.model import AppMode
+from models.model import App, AppMode
 
 
 class ConversationVariablesQuery(BaseModel):
@@ -84,7 +84,7 @@ class ConversationVariablesApi(Resource):
     @console_ns.doc("get_conversation_variables")
     @console_ns.doc(description="Get conversation variables for an application")
     @console_ns.doc(params={"app_id": "Application ID"})
-    @console_ns.expect(console_ns.models[ConversationVariablesQuery.__name__])
+    @console_ns.doc(params=query_params_from_model(ConversationVariablesQuery))
     @console_ns.response(
         200,
         "Conversation variables retrieved successfully",
@@ -94,7 +94,7 @@ class ConversationVariablesApi(Resource):
     @login_required
     @account_initialization_required
     @get_app_model(mode=AppMode.ADVANCED_CHAT)
-    def get(self, app_model):
+    def get(self, app_model: App):
         args = ConversationVariablesQuery.model_validate(request.args.to_dict(flat=True))
 
         stmt = (

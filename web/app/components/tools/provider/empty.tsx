@@ -7,10 +7,10 @@ import Link from '@/next/link'
 import { NoToolPlaceholder } from '../../base/icons/src/vender/other'
 import { ToolTypeEnum } from '../../workflow/block-selector/types'
 
-type Props = {
+type Props = Readonly<{
   type?: ToolTypeEnum
   isAgent?: boolean
-}
+}>
 
 const getLink = (type?: ToolTypeEnum) => {
   switch (type) {
@@ -45,7 +45,7 @@ const Empty = ({
         <Comp className={cn('flex items-center text-[13px] leading-[18px] text-text-tertiary', hasLink && 'cursor-pointer hover:text-text-accent')} {...linkProps}>
           {t(`addToolModal.${renderType}.tip`, { ns: 'tools' })}
           {' '}
-          {hasLink && <RiArrowRightUpLine className="ml-0.5 h-3 w-3" />}
+          {hasLink && <RiArrowRightUpLine className="ml-0.5 size-3" />}
         </Comp>
       )}
     </div>

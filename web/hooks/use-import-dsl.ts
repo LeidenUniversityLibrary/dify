@@ -4,6 +4,7 @@ import type {
 } from '@/models/app'
 import type { AppIconType } from '@/types/app'
 import { toast } from '@langgenius/dify-ui/toast'
+import { useSetLocalStorage } from 'foxact/use-local-storage'
 import {
   useCallback,
   useRef,
@@ -32,7 +33,7 @@ type DSLPayload = {
   description?: string
 }
 type ResponseCallback = {
-  onSuccess?: () => void
+  onSuccess?: (payload: DSLImportResponse) => void
   onPending?: (payload: DSLImportResponse) => void
   onFailed?: () => void
 }
@@ -44,6 +45,7 @@ export const useImportDSL = () => {
   const { push } = useRouter()
   const [versions, setVersions] = useState<{ importedVersion: string, systemVersion: string }>()
   const importIdRef = useRef<string>('')
+  const setNeedRefresh = useSetLocalStorage<string>(NEED_REFRESH_APP_LIST_KEY, { raw: true })
 
   const handleImportDSL = useCallback(async (
     payload: DSLPayload,
@@ -85,8 +87,8 @@ export const useImportDSL = () => {
           toast.success(message)
         else
           toast.warning(message, { description })
-        onSuccess?.()
-        localStorage.setItem(NEED_REFRESH_APP_LIST_KEY, '1')
+        onSuccess?.(response)
+        setNeedRefresh('1')
         await handleCheckPluginDependencies(app_id)
         getRedirection(isCurrentWorkspaceEditor, { id: app_id, mode: app_mode }, push)
       }
@@ -134,10 +136,10 @@ export const useImportDSL = () => {
         return
 
       if (status === DSLImportStatus.COMPLETED) {
-        onSuccess?.()
+        onSuccess?.(response)
         toast.success(t('newApp.appCreated', { ns: 'app' }))
         await handleCheckPluginDependencies(app_id)
-        localStorage.setItem(NEED_REFRESH_APP_LIST_KEY, '1')
+        setNeedRefresh('1')
         getRedirection(isCurrentWorkspaceEditor, { id: app_id!, mode: app_mode }, push)
       }
       else if (status === DSLImportStatus.FAILED) {

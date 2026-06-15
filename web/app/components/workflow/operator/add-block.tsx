@@ -10,12 +10,17 @@ import {
   useState,
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useStoreApi } from 'reactflow'
+import {
+  useNodes,
+  useStoreApi,
+} from 'reactflow'
 import BlockSelector from '@/app/components/workflow/block-selector'
 import {
   BlockEnum,
+  isTriggerNode,
 } from '@/app/components/workflow/types'
 import { FlowType } from '@/types/common'
+import { TabsEnum } from '../block-selector/types'
 import {
   useAvailableBlocks,
   useIsChatMode,
@@ -33,11 +38,15 @@ import TipPopup from './tip-popup'
 
 type AddBlockProps = {
   renderTrigger?: (open: boolean) => React.ReactNode
+  renderTriggerAsButtonRoot?: boolean
   offset?: OffsetOptions
+  onClose?: () => void
 }
 const AddBlock = ({
   renderTrigger,
+  renderTriggerAsButtonRoot,
   offset,
+  onClose,
 }: AddBlockProps) => {
   const { t } = useTranslation()
   const store = useStoreApi()
@@ -46,16 +55,24 @@ const AddBlock = ({
   const { nodesReadOnly } = useNodesReadOnly()
   const { handlePaneContextmenuCancel } = usePanelInteractions()
   const [open, setOpen] = useState(false)
+  const nodes = useNodes()
   const { availableNextBlocks } = useAvailableBlocks(BlockEnum.Start, false)
   const { nodesMap: nodesMetaDataMap } = useNodesMetaData()
   const flowType = useHooksStore(s => s.configsMap?.flowType)
   const showStartTab = flowType !== FlowType.ragPipeline && !isChatMode
+  const hasEntryNode = nodes.some((node) => {
+    const nodeData = node.data as { type?: BlockEnum }
+    const nodeType = nodeData.type
+    return nodeType === BlockEnum.Start || (nodeType ? isTriggerNode(nodeType) : false)
+  })
+
+  const defaultActiveTab = showStartTab && !hasEntryNode ? TabsEnum.Start : undefined
 
   const handleOpenChange = useCallback((open: boolean) => {
     setOpen(open)
     if (!open)
-      handlePaneContextmenuCancel()
-  }, [handlePaneContextmenuCancel])
+      (onClose ?? handlePaneContextmenuCancel)()
+  }, [handlePaneContextmenuCancel, onClose])
 
   const handleSelect = useCallback<OnSelectBlock>((type, pluginDefaultValue) => {
     const {
@@ -90,12 +107,12 @@ const AddBlock = ({
         title={t('common.addBlock', { ns: 'workflow' })}
       >
         <div className={cn(
-          'flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-text-tertiary hover:bg-state-base-hover hover:text-text-secondary',
+          'flex size-8 cursor-pointer items-center justify-center rounded-lg text-text-tertiary hover:bg-state-base-hover hover:text-text-secondary',
           `${nodesReadOnly && 'cursor-not-allowed text-text-disabled hover:bg-transparent hover:text-text-disabled'}`,
           open && 'bg-state-accent-active text-text-accent',
         )}
         >
-          <RiAddCircleFill className="h-4 w-4" />
+          <RiAddCircleFill className="size-4" />
         </div>
       </TipPopup>
     )
@@ -113,9 +130,11 @@ const AddBlock = ({
         crossAxis: -8,
       }}
       trigger={renderTrigger || renderTriggerElement}
+      renderTriggerAsButtonRoot={renderTriggerAsButtonRoot}
       popupClassName="min-w-[256px]!"
       availableBlocksTypes={availableNextBlocks}
       showStartTab={showStartTab}
+      defaultActiveTab={defaultActiveTab}
     />
   )
 }

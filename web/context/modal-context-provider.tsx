@@ -11,6 +11,7 @@ import type { InputVar } from '@/app/components/workflow/types'
 import type { ExpireNoticeModalPayloadProps } from '@/app/education-apply/expire-notice-modal'
 import type { ExternalDataTool } from '@/models/common'
 import type { ModerationConfig, PromptVariable } from '@/models/debug'
+import { useSetLocalStorage } from 'foxact/use-local-storage'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
 
@@ -99,14 +100,11 @@ export const ModalContextProvider = ({
   const [showUpdatePluginModal, setShowUpdatePluginModal] = useState<ModalState<UpdatePluginPayload> | null>(null)
   const [showEducationExpireNoticeModal, setShowEducationExpireNoticeModal] = useState<ModalState<ExpireNoticeModalPayloadProps> | null>(null)
   const { currentWorkspace } = useAppContext()
+  const setEducationVerifying = useSetLocalStorage<string>(EDUCATION_VERIFYING_LOCALSTORAGE_ITEM, { raw: true })
 
   const [showAnnotationFullModal, setShowAnnotationFullModal] = useState(false)
   const handleCancelAccountSettingModal = () => {
-    const educationVerifying = localStorage.getItem(EDUCATION_VERIFYING_LOCALSTORAGE_ITEM)
-
-    if (educationVerifying === 'yes')
-      localStorage.removeItem(EDUCATION_VERIFYING_LOCALSTORAGE_ITEM)
-
+    setEducationVerifying(educationVerifying => educationVerifying === 'yes' ? null : educationVerifying)
     accountSettingCallbacksRef.current?.onCancelCallback?.()
     accountSettingCallbacksRef.current = null
     setUrlAccountModalState(null)

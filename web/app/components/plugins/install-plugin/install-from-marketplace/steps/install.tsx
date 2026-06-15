@@ -20,14 +20,14 @@ import { pluginManifestInMarketToPluginProps } from '../../utils'
 
 const i18nPrefix = 'installModal'
 
-type Props = {
+type Props = Readonly<{
   uniqueIdentifier: string
   payload: PluginManifestInMarket | Plugin
   onCancel: () => void
   onStartToInstall?: () => void
   onInstalled: (notRefresh?: boolean) => void
   onFailed: (message?: string) => void
-}
+}>
 
 const Installed: FC<Props> = ({
   uniqueIdentifier,
@@ -169,7 +169,7 @@ const Installed: FC<Props> = ({
           disabled={isInstalling || isLoading || !canInstall}
           onClick={handleInstall}
         >
-          {isInstalling && <RiLoader2Line className="h-4 w-4 animate-spin-slow" />}
+          {isInstalling && <RiLoader2Line className="size-4 animate-spin-slow" />}
           <span>{t(`${i18nPrefix}.${isInstalling ? 'installing' : 'install'}`, { ns: 'plugin' })}</span>
         </Button>
       </div>

@@ -146,6 +146,7 @@ export const useInstalledPluginList = (disable?: boolean, pageSize = 100) => {
     isSuccess,
   } = useInfiniteQuery({
     enabled: !disable,
+    gcTime: 0,
     queryKey: useInstalledPluginListKey,
     queryFn: fetchPlugins,
     getNextPageParam: (lastPage, pages) => {
@@ -159,6 +160,7 @@ export const useInstalledPluginList = (disable?: boolean, pageSize = 100) => {
       return currentPage + 1
     },
     initialPageParam: 1,
+    staleTime: 0,
   })
 
   const plugins = data?.pages.flatMap(page => page.plugins) ?? []
@@ -565,15 +567,6 @@ export const usePluginManifestInfo = (pluginUID: string) => {
     enabled: !!pluginUID,
     queryKey: [NAME_SPACE, 'manifest', pluginUID],
     queryFn: () => getMarketplace<{ data: { plugin: PluginInfoFromMarketPlace, version: { version: string } } }>(`/plugins/${pluginUID}`),
-    retry: 0,
-  })
-}
-
-export const useDownloadPlugin = (info: { organization: string, pluginName: string, version: string }, needDownload: boolean) => {
-  return useQuery({
-    queryKey: [NAME_SPACE, 'downloadPlugin', info],
-    queryFn: () => getMarketplace<Blob>(`/plugins/${info.organization}/${info.pluginName}/${info.version}/download`),
-    enabled: needDownload,
     retry: 0,
   })
 }

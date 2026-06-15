@@ -13,10 +13,10 @@ import { AUTO_UPDATE_STRATEGY } from './types'
 
 const i18nPrefix = 'autoUpdate.strategy'
 
-type Props = {
+type Props = Readonly<{
   value: AUTO_UPDATE_STRATEGY
   onChange: (value: AUTO_UPDATE_STRATEGY) => void
-}
+}>
 const StrategyPicker = ({
   value,
   onChange,
@@ -53,7 +53,7 @@ const StrategyPicker = ({
     >
       <DropdownMenuTrigger render={<Button size="small" />}>
         {selectedOption?.label}
-        <span aria-hidden className="i-ri-arrow-down-s-line h-3.5 w-3.5" />
+        <span aria-hidden className="i-ri-arrow-down-s-line size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent
         placement="top-end"
